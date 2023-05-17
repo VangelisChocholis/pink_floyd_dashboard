@@ -130,7 +130,7 @@ def plot_albums_popularity():
         yaxis_title='',
         title='Album Popularity (0 - 100)',
         height=600,
-        width=950,
+        width=900,
     )
     # adjust font size, use -45 degres label rotation
     fig.update_xaxes(tickfont=dict(size=15))
