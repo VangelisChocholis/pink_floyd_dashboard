@@ -10,6 +10,8 @@ df = pd.read_csv('pink_floyd_tracks_updated.csv', parse_dates=[5])
 df.loc[df['track_id']=='63M8OHzd0lcVT517Pnon81', 'track_name'] = 'Several Speacies of Small Furry Animals...'
 
 df = df.sort_values(by='track_popularity', ascending=True)
+
+
 albums = (df
            .groupby(by=['release_date', 'album_name'])['album_popularity']
            .mean()
@@ -22,11 +24,13 @@ albums = (df
 dropdown_cols = [col.replace('_', ' ') for col in df.loc[:, ['track_popularity', 'valence', 'energy', 'danceability']].columns]
 
 
+
+
 def plot_tracks():
     # make Pink Floyd tracks vs Popoularity
 
     # make x-axis dropdown menu
-    column_selector = st.selectbox('Select x-axis', dropdown_cols, key=1)
+    column_selector = st.selectbox('Select x-axis', dropdown_cols, key=1, index=1) # set valence as default y-axis
 
     # df to plot
     if column_selector == 'track popularity':
@@ -49,6 +53,7 @@ def plot_tracks():
         )
     )
     fig.update_yaxes(title_text='')
+    # set x-axis label
     fig.update_xaxes(title_text=column_selector)
     # set axis on top and adjust chart size
     fig.update_layout(xaxis_side='top')
@@ -63,19 +68,18 @@ def plot_tracks_album():
     # plot tracks for each album
     # make Album dropdown menu
     album_list = df.sort_values(by='release_date')['album_name'].unique() # display chronologically
-    album_selector = st.selectbox('Select Album', album_list, key=2)
+    album_selector = st.selectbox('Select Album', album_list, key=2, index=10) # set The Wall as deafault Album
 
     # make y axis dropdown menu
-    column_selector = st.selectbox('Select y-axis', dropdown_cols)
+    column_selector = st.selectbox('Select y-axis', dropdown_cols, index=1)  # set valence as default y-axis
 
-    # df to plot
+    # we plot df_chart
     if column_selector == 'track popularity':
         column_selector = 'track_popularity'
     df_chart = df[df['album_name']==album_selector].sort_values(by=column_selector, ascending=False)
 
 
     fig = px.bar(df_chart, x='track_name', y=column_selector)
-
 
     fig.update_layout(
         xaxis_title='Album',
@@ -84,7 +88,10 @@ def plot_tracks_album():
         height=600,
         width=900,
     )
+    # adjust font size, use -45 degres label rotation
+    fig.update_xaxes(tickfont=dict(size=14))
     fig.update_layout(xaxis_tickangle=-45)
+
     return fig
 
 
@@ -93,7 +100,8 @@ def plot_album_date():
     # perform groupby to get data
     
     # make chart
-    fig = px.bar(albums, x='release_date', y='album_popularity', color='album_name')
+    fig = px.bar(albums, x='release_date', y='album_popularity',
+                   color='album_name', color_discrete_sequence=px.colors.qualitative.Alphabet)
     # adjust chart
     fig.update_layout(
         xaxis_title='Release Date',
@@ -124,6 +132,9 @@ def plot_albums_popularity():
         height=600,
         width=950,
     )
+    # adjust font size, use -45 degres label rotation
+    fig.update_xaxes(tickfont=dict(size=15))
+    fig.update_layout(xaxis_tickangle=-45)
     return fig
     
 
@@ -133,18 +144,19 @@ def plot_albums_popularity():
 #st.write(plot_album_date())
 #st.write(plot_albums_popularity())
 
-menu = ["Pink Floyd Tracks", "Tracks per Album", "Album Release Date", "Album Popularity"]  # List of graph names
-selection = st.sidebar.selectbox("Select a graph", menu)
+#menu = ["Pink Floyd Tracks", "Tracks per Album", "Album Release Date", "Album Popularity"]  # List of graph names
 
+# make a menu for the sidebar, each string maps to a plot function
+menu = {
+    'Tracks per Album': plot_tracks_album,
+    'Album Popularity': plot_albums_popularity,
+    'Popularity by Release Date': plot_album_date,
+    'Pink Floyd Tracks': plot_tracks
+    }
+
+# sidebar to select graph
+selection = st.sidebar.selectbox('Select a graph', menu.keys())
 
 st.subheader(selection)
-
-if selection == menu[0]:
-    st.write(plot_tracks())
-elif selection == menu[1]:
-    st.write(plot_tracks_album())
-elif selection == menu[2]:
-    st.write(plot_album_date())
-elif selection == menu[3]:
-    st.write(plot_albums_popularity())
-
+# write corresonding plot 
+st.write(menu[selection]())
