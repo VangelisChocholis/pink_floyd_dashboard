@@ -19,12 +19,12 @@ albums = (df
           .reset_index()
          )
 
+
+
 #dropdown_cols = df.loc[:, [ 'track_popularity', 'valence', 'energy', 'danceability']].columns
 dropdown_cols = [col.replace('_', ' ') for col in df.loc[:, ['track_popularity', 'valence', 'energy', 'danceability', 'duration']].columns]
 
 
-
-# make graph functions
 def plot_tracks():
     # make Pink Floyd tracks vs Popoularity
 
