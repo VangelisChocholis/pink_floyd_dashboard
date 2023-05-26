@@ -150,8 +150,7 @@ def plot_albums_popularity():
 menu = {
     'Tracks per Album': plot_tracks_album,
     'Album Popularity': plot_albums_popularity,
-    'Popularity by Release Date': plot_album_date,
-    'Pink Floyd Tracks': plot_tracks
+    'Pink Floyd Tracks': plot_tracks, #'Popularity by Release Date': plot_album_date,
     }
 
 # sidebar to select graph
