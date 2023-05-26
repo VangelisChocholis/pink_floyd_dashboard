@@ -15,11 +15,12 @@ danceability_str = '''
 Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo,
 rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
 '''
-
+duration_str = 'Track duration in minutes'
 
 descr_dict = {
 	'track_popularity': track_popularity_str,
 	'valence': valence_str,
 	'energy': energy_str,
 	'danceability': danceability_str,
+    'duration': duration_str,
 }
