@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from descriptions import descr_dict 
+from descriptions import descr_dict
 
 df = pd.read_csv('pink_floyd_tracks_updated.csv', parse_dates=[5])
 
@@ -11,21 +11,20 @@ df.loc[df['track_id']=='63M8OHzd0lcVT517Pnon81', 'track_name'] = 'Several Speaci
 
 df = df.sort_values(by='track_popularity', ascending=True)
 
-
+#  group by album, get release  date as well
 albums = (df
-           .groupby(by=['release_date', 'album_name'])['album_popularity']
-           .mean()
-           .reset_index()
-           .sort_values(by='release_date', ascending=True)
-             )
-
+          .groupby(by=['album_name', 'release_date'])
+          .agg({'album_popularity': 'mean',
+                'duration': 'sum'})
+          .reset_index()
+         )
 
 #dropdown_cols = df.loc[:, [ 'track_popularity', 'valence', 'energy', 'danceability']].columns
-dropdown_cols = [col.replace('_', ' ') for col in df.loc[:, ['track_popularity', 'valence', 'energy', 'danceability']].columns]
+dropdown_cols = [col.replace('_', ' ') for col in df.loc[:, ['track_popularity', 'valence', 'energy', 'danceability', 'duration']].columns]
 
 
 
-
+# make graph functions
 def plot_tracks():
     # make Pink Floyd tracks vs Popoularity
 
@@ -63,6 +62,7 @@ def plot_tracks():
 
 
 
+
 def plot_tracks_album():
     
     # plot tracks for each album
@@ -77,10 +77,12 @@ def plot_tracks_album():
     if column_selector == 'track popularity':
         column_selector = 'track_popularity'
     df_chart = df[df['album_name']==album_selector].sort_values(by=column_selector, ascending=False)
-    
+
+
     # add description 
     st.write(descr_dict[column_selector])
-         
+
+
     fig = px.bar(df_chart, x='track_name', y=column_selector)
 
     fig.update_layout(
@@ -95,6 +97,8 @@ def plot_tracks_album():
     fig.update_layout(xaxis_tickangle=-45)
 
     return fig
+
+
 
 
 def plot_album_date():
@@ -112,25 +116,34 @@ def plot_album_date():
         height=600,
         width=900,
     )
-
-
     fig.update_xaxes(range=[albums['release_date'].min() - pd.DateOffset(years=2)
                             , albums['release_date'].max() + pd.DateOffset(years=2)]
                     )
-
     return fig
 
 
 def plot_albums_popularity():
     # make albums by popularity
     albs = albums.sort_values(by='album_popularity', ascending=False)
-
-    fig = px.bar(albs, x='album_name', y='album_popularity')
+    
+     # make y axis dropdown menu
+    dropdown_list = [col.replace('_', ' ') for col in albums.columns[2:]]
+    column_selector = st.selectbox('Select y-axis', dropdown_list, key=123, index=1)
+    
+    # adjust y axis title, return to _ 
+    y_title = column_selector
+    if column_selector=='album popularity':
+        column_selector = 'album_popularity'
+    else:
+        y_title = column_selector + ' ' + '(min)'
+    
+    albs = albs.sort_values(by=column_selector, ascending=False)
+    fig = px.bar(albs, x='album_name', y=column_selector)
 
     fig.update_layout(
         xaxis_title='Album',
-        yaxis_title='',
-        title='Album Popularity (0 - 100)',
+        yaxis_title=y_title,
+        title='',
         height=600,
         width=900,
     )
@@ -148,11 +161,11 @@ def plot_albums_popularity():
 
 #menu = ["Pink Floyd Tracks", "Tracks per Album", "Album Release Date", "Album Popularity"]  # List of graph names
 
-# make a menu for the sidebar, each string maps to a plot function
+
 menu = {
     'Tracks per Album': plot_tracks_album,
-    'Album Popularity': plot_albums_popularity,
-    'Pink Floyd Tracks': plot_tracks, #'Popularity by Release Date': plot_album_date,
+    'Album Popularity': plot_albums_popularity,#'Popularity by Release Date': plot_album_date,
+    'Pink Floyd Tracks': plot_tracks
     }
 
 # sidebar to select graph
