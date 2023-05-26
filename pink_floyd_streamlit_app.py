@@ -77,8 +77,10 @@ def plot_tracks_album():
     if column_selector == 'track popularity':
         column_selector = 'track_popularity'
     df_chart = df[df['album_name']==album_selector].sort_values(by=column_selector, ascending=False)
-
-
+    
+    # add description 
+    st.write(descr_dict[column_selector])
+         
     fig = px.bar(df_chart, x='track_name', y=column_selector)
 
     fig.update_layout(
