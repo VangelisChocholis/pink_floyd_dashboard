@@ -128,7 +128,7 @@ def plot_albums_popularity():
     
      # make y axis dropdown menu
     dropdown_list = [col.replace('_', ' ') for col in albums.columns[2:]]
-    column_selector = st.selectbox('Select y-axis', dropdown_list, key=123, index=1)
+    column_selector = st.selectbox('Select y-axis', dropdown_list, key=123)
     
     # adjust y axis title, return to _ 
     y_title = column_selector
@@ -163,8 +163,8 @@ def plot_albums_popularity():
 
 
 menu = {
-    'Tracks per Album': plot_tracks_album,
-    'Album Popularity': plot_albums_popularity,#'Popularity by Release Date': plot_album_date,
+    'Pink Floyd Tracks per Album': plot_tracks_album,
+    'Pink Floyd Albums': plot_albums_popularity,#'Popularity by Release Date': plot_album_date,
     'Pink Floyd Tracks': plot_tracks
     }
 
