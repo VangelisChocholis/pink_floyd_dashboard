@@ -42,7 +42,7 @@ pink_floyd_popularity = sp.artist(df['artist_id'][0])['popularity']
 pink_floyd_art_pop = pd.read_csv('pink_floyd_artist_popularity.csv')
 current_date = date.today()
 pop_dict = {'date': [current_date],
-          'artist_popularity': [pink_floyd_popularity]}+
+          'artist_popularity': [pink_floyd_popularity]}
 # make new df
 pink_floyd_art_pop_new = pd.DataFrame(pop_dict)
 # concat old and new 
