@@ -29,11 +29,11 @@ alb_pop_df = pd.DataFrame(data={'album_id': alb_pop.keys(),
 df = pd.merge(df, alb_pop_df, on='album_id')
 
 # check number of tracks and save to csv
-tot_tracks = sum(album_num_tracks.values())
+'''tot_tracks = sum(album_num_tracks.values())
 if tot_tracks == df.shape[0]:
     df.to_csv('pink_floyd_tracks_updated.csv', index=False)
 else:
-    raise Exception('Error! Unable to collect the correct number of tracks')
+    raise Exception('Error! Unable to collect the correct number of tracks')'''
 
 
 # get current Pink Floyd popularity
