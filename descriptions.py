@@ -17,10 +17,15 @@ rhythm stability, beat strength, and overall regularity. A value of 0.0 is least
 '''
 duration_str = 'Track duration in minutes'
 
+artist_popularity_str = '''
+The Artist Popularity score ranges from 0 to 100, with higher values indicating greater popularity. The score takes into account factors such as the number of followers, the frequency of streaming, the number of times an artist's songs are added to playlists, and the overall engagement with their music.
+'''
+
 descr_dict = {
 	'track_popularity': track_popularity_str,
 	'valence': valence_str,
 	'energy': energy_str,
 	'danceability': danceability_str,
     'duration': duration_str,
+    'artist_popularity':artist_popularity_str,
 }

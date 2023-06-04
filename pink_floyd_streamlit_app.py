@@ -4,6 +4,11 @@ import plotly.express as px
 from descriptions import descr_dict
 
 df = pd.read_csv('pink_floyd_tracks_updated.csv', parse_dates=[5])
+pink_floyd_pop = pd.read_csv('pink_floyd_artist_popularity.csv', parse_dates=[0]).drop_duplicates()
+
+# display the last time of data update
+last_date = str(pink_floyd_pop['date'].iloc[-1]).split(' ')[0]
+st.sidebar.write(f'Last Data Update at {last_date}')
 
 # sort the name of the song (What is this?!):
 # Several Species of Small Furry Animals Gathered Together in a Cave and Grooving with a Pict 
@@ -122,6 +127,8 @@ def plot_album_date():
     return fig
 
 
+
+
 def plot_albums_popularity():
     # make albums by popularity
     albs = albums.sort_values(by='album_popularity', ascending=False)
@@ -153,6 +160,21 @@ def plot_albums_popularity():
     return fig
     
 
+    
+def plot_artist_popularity():
+    # add description for artist_popularity
+    st.write(descr_dict['artist_popularity'])
+    
+    first_date = pink_floyd_pop['date'].min() - pd.DateOffset(days=1)
+    last_date = pink_floyd_pop['date'].max()
+    end_date = last_date + pd.DateOffset(months=1)
+    
+    fig = px.line(pink_floyd_pop, x='date', y='artist_popularity',
+                 markers=True, height=500, width=900)
+    fig.update_traces(marker=dict(size=10))
+    fig.update_xaxes(range=[first_date, end_date])
+    fig.update_yaxes(title_text='Popularity', range=[0, 100])
+    return fig
 
 #st.write(plot_tracks())
 #st.write(plot_tracks_album())
@@ -165,7 +187,8 @@ def plot_albums_popularity():
 menu = {
     'Pink Floyd Tracks per Album': plot_tracks_album,
     'Pink Floyd Albums': plot_albums_popularity,#'Popularity by Release Date': plot_album_date,
-    'Pink Floyd Tracks': plot_tracks
+    'Pink Floyd Tracks': plot_tracks,
+    'Pink Floyd Popularity Trend': plot_artist_popularity
     }
 
 # sidebar to select graph
