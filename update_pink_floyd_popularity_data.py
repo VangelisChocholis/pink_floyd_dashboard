@@ -2,8 +2,10 @@ import pandas as pd
 from datetime import date
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import os
 
-
+# Change the current working directory to the desired directory
+os.chdir('/home/VangelisChocholis/pink_floyd_dashboard')
 
 # read Pink Floyd data
 # check get_pink_floyd_data_to_csv.py to see how we got them from a databse
