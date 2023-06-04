@@ -163,7 +163,7 @@ def plot_albums_popularity():
     
 def plot_artist_popularity():
     # add description for artist_popularity
-    st.write(descr_dict['artist_popularity'])
+    #st.write(descr_dict['artist_popularity'])
     
     first_date = pink_floyd_pop['date'].min() - pd.DateOffset(days=1)
     last_date = pink_floyd_pop['date'].max()
