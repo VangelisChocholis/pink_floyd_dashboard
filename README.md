@@ -1,7 +1,8 @@
 ## Pink Floyd Interactive Dashboard with Daily Data Updates
 Explore an interactive dashboard dedicated to the timeless music of Pink Floyd,
-the greatest band of all time! Stay informed with daily data updates on popularity of tracks and albums, 
-bringing you the latest information and insights for an enhanced experience.
+the greatest bands of all time (though we can agree to disagree on this!)! 
+Stay informed with daily updates on the popularity of tracks and albums,
+as well as Pink Floyd's overall popularity.
 
 ### My workflow
 ![My Workflow](workflow_pink_floyd_dashboard.png)
