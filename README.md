@@ -4,7 +4,7 @@ the greatest bands of all time (though we can agree to disagree on this!)!
 Stay informed with daily updates on the popularity of tracks and albums,
 as well as Pink Floyd's overall popularity.
 
-### My workflow
+### Workflow
 ![My Workflow](workflow_pink_floyd_dashboard.png)
 
 I obtained data from a local SQLite database containing over 8 million Spotify tracks, which can be accessed at https://www.kaggle.com/datasets/maltegrosse/8-m-spotify-tracks-genre-audio-features?resource=download. I connected to the database using Python (pandas) and executed an SQL query to retrieve the desired data. Subsequently, I performed data cleaning to focus on the main Pink Floyd albums and tracks.
