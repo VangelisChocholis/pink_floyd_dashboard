@@ -4,7 +4,7 @@ the greatest band of all time! Stay informed with daily data updates on populari
 bringing you the latest information and insights for an enhanced experience.
 
 ### My workflow
-!I can illustrate my workflow using the following image](workflow_pink_floyd_dashboard.png)
+![I can illustrate my workflow using the following image](workflow_pink_floyd_dashboard.png)
 
 I obtained data from a local SQLite database containing over 8 million Spotify tracks, which can be accessed at https://www.kaggle.com/datasets/maltegrosse/8-m-spotify-tracks-genre-audio-features?resource=download. I connected to the database using Python (pandas) and executed an SQL query to retrieve the desired data. Subsequently, I performed data cleaning to focus on the main Pink Floyd albums and tracks.
 
